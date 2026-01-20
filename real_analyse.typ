@@ -1,6 +1,6 @@
 #set text(
   size:12pt,
-  font:"Noto Serif CJK SC"
+  font: ("Noto Serif CJK SC","FangSong","SimHei","Maple Mono NF","DejaVu Serif")
 )
 #set heading(numbering: "1.")
 #show heading.where(level: 1):set text(weight:"bold",size:24pt)
@@ -262,4 +262,42 @@
 ]
 == 如何度量
 我们对于我们要研究的对象(某个落在$sigma$代数中的集合)该如何度量，这是我们在延续黎曼积分的思想所遇到的困难。
-=== 外测度
+=== 测度
+#definition[
+    如果$cal(A)$是$X$上的$sigma$代数,且映射$mu:cal(A)->[0,infinity]$满足
+    - $mu(emptyset)=0$
+    - $mu(union.big_(i in I) A_i)=sum_(i in I) mu(A_i)$,如果$A_i$之间不交
+    那么$mu$称为$cal(A)$上的(非负)测度。
+]
+*例子:*\
+- 对于可数集$X,cal(A)=cal(P)(X)$,对任意的$A in cal(A)$,定义$mu(A)="card"(A)$
+- 对于任意地$(X,cal(A))$,选定$x_0 in X$,对于任意地$A in cal(A)$,
+    定义$delta_(x_0)(A)=cases(1\,x_0 in A,0\,x_0 in.not A)$
+#definition[
+    给定测度空间$(X,cal(A),mu)$,如果$mu(X)<infinity$,则称$mu$是有限的,
+    如果对于任意单调上升的序列${A_i}_(i>=1),lim_(i->infinity)A_i=X$,
+    都有$mu(A_i)<infinity,i>=1$,则称$mu$为$sigma$有限的
+]
+显然,我们在一个相对有限的代数上构造测度比在相对无限的$sigma$代数上要容易得多,
+我们希望能够将测度从一个代数上扩充到$sigma$代数上,这就是_*Caratheodory定理*_
+#theorem[
+    给定$X$上的代数$cal(A)$,$mu$为$cal(A)$上的$sigma$有限测度,
+    那么至多存在一个$sigma(cal(A))$上的测度$mu^prime$,满足$mu^prime|_(cal(A))=mu$
+
+    如果$mu$是有限测度,则需要补充条件:
+
+    *条件C*: #h(0.2em) 对于任意单调下降的序列
+    ${A_i}_(i>=1)subset cal(A),lim_(i->infinity)A_i=emptyset$
+    且$mu(A_i)<infinity,i>=1$
+    都有$lim_(i->infinity)mu(A_i)=0$
+
+    如果$mu(X)=infinity$,还需要需要补充条件:
+
+    *条件$C_infinity$:*#h(0.3em) 存在单调上升的序列
+    ${X_i}_(i>=1)subset cal(A),lim_(i->infinity)X_i=X$且
+    $mu(X_i)<infinity,i>=1$,满足对于任意地$A in cal(A)$,$mu(A)=infinity$,
+    都有$lim_(i->infinity)(X_i inter A)=infinity$
+]
+#proof[
+
+]
