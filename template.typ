@@ -17,14 +17,16 @@
 
 // 定理环境：语法沿用之前的模板（#名[正文] 或 #名[标题][正文]）
 #let make-env(abbr, label, color) = (..args) => {
+  // 计数器自增必须在 context 之外完成，否则 context 内部的 get/update
+  // 会互相干扰，导致过若干章后编号不再增长（重复为同一个数）。
+  thmctr.step()
   context {
     let (title, body) = if args.pos().len() >= 2 {
       (args.pos().at(0), args.pos().at(1))
     } else {
       (none, args.pos().at(0))
     }
-    let thmnum = thmctr.get().first() + 1
-    thmctr.update(thmnum)
+    let thmnum = thmctr.get().first()
     let sec = counter(heading).at(here()).at(0, default: 0)
     block(
       width: 100%,
