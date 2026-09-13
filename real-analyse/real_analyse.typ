@@ -1,175 +1,22 @@
-#set text(
-  size:12pt,
-  font: ("Noto Serif CJK SC","FangSong","SimHei","Maple Mono NF","DejaVu Serif")
-)
-#set heading(numbering: "1.")
-#show heading.where(level: 1):set text(weight:"bold",size:24pt)
-#show heading.where(level: 2):set text(weight:"bold",size:18pt)
+#import "../template.typ": *
+
+#show: notes.with(title: "实分析笔记")
+
+// 本文额外的环境：只在本文定义，不并入全局 template.typ
+#let lemma = make-env("LEM", "引理", rgb("#0e7a3d"))
+#let proposition = make-env("PROP", "命题", rgb("#1e3a8a"))
+#let proof(body) = block(
+  width: 100%,
+  inset: (x: 1.2em, y: 0.7em),
+)[
+  #text(weight: "bold", style: "italic")[证明.]#h(0.8em)
+  #body
+  #h(1fr) $ballot$
+]
+
+#set text(size: 12pt)
 #show math.union: math.union.big
 #show math.inter: math.inter.big
-
-#let lemma-counter = counter("lemma")
-#let theorem-counter = counter("theorem")
-#let definition-counter = counter("definition")
-#let proposition-counter = counter("proposition")
-
-#let theorem(term, caption: none) = {
-  // 获取当前章节编号
-  let chapter-num = context counter(heading.where(level: 1)).get().first()
-
-  theorem-counter.step(level: 1)
-
-  // 获取当前 theorem 编号
-  let theorem-num = context theorem-counter.get().first()
-
-  // 构建完整编号
-  let full-number = if chapter-num != none {
-    [#chapter-num.#theorem-num]
-  } else {
-    [#theorem-num]
-  }
-
-  block(
-    fill: rgb("#EEF3F8"),
-    inset: 6pt,
-    radius: 4pt,
-    stroke: rgb("#F7F9FB"),
-    width: 100%,
-    breakable: true,
-    [
-      #text(weight: "bold", size: 1.1em)[Theorem #full-number] #h(1em)
-      #term
-    ]
-  )
-}
-
-#let lemma(term, caption: none) = {
-  // 获取当前章节编号
-  let chapter-num = context counter(heading.where(level: 1)).get().first()
-
-  // 在每个新章节重置 lemma 计数器
-  lemma-counter.step(level: 1)
-
-  // 获取当前 lemma 编号
-  let lemma-num = context lemma-counter.get().first()
-
-  // 构建完整编号
-  let full-number = if chapter-num != none {
-    [#chapter-num.#lemma-num]
-  } else {
-    [#lemma-num]
-  }
-
-  block(
-    fill: rgb("#EEF3F8"),
-    inset: 6pt,
-    radius: 4pt,
-    stroke: rgb("#F7F9FB"),
-    width: 100%,
-    breakable: true,
-    [
-      #text(weight: "bold", size: 1.2em)[Lemma #full-number] #h(1em)
-      #term
-    ]
-  )
-}
-
-#let definition(term, caption: none) = {
-  // 获取当前章节编号
-  let chapter-num = context counter(heading.where(level: 1)).get().first()
-
-  definition-counter.step(level: 1)
-
-  // 获取当前 definition 编号
-  let definition-num = context definition-counter.get().first()
-
-  // 构建完整编号
-  let full-number = if chapter-num != none {
-    [#chapter-num.#definition-num]
-  } else {
-    [#definition-num]
-  }
-
-  block(
-    fill: rgb("#EEF3F8"),
-    inset: 6pt,
-    radius: 4pt,
-    stroke: rgb("#F7F9FB"),
-    width: 100%,
-    breakable: true,
-    [
-      #text(weight: "bold", size: 1.1em)[Definition #full-number] #h(1em)
-      #term
-    ]
-  )
-}
-
-#let proposition(term, caption: none) = {
-  // 获取当前章节编号
-  let chapter-num = context counter(heading.where(level: 1)).get().first()
-
-  proposition-counter.step(level: 1)
-
-  // 获取当前 proposition 编号
-  let proposition-num = context proposition-counter.get().first()
-
-  // 构建完整编号
-  let full-number = if chapter-num != none {
-    [#chapter-num.#proposition-num]
-  } else {
-    [#proposition-num]
-  }
-
-  block(
-    fill: rgb("#EEF3F8"),
-    inset: 6pt,
-    radius: 4pt,
-    stroke: rgb("#F7F9FB"),
-    width: 100%,
-    breakable: true,
-    [
-      #text(weight: "bold", size: 1.1em)[Proposition #full-number] #h(1em)
-      #term
-    ]
-  )
-}
-
-#let proof(term) = {
-  [#text(weight: "bold",style: "italic")[Proof.] #h(1em)
-  #term
-  #h(1fr) $ballot$
-  ]
-}
-
-#show heading.where(level: 1): it =>{
-  lemma-counter.update(0)
-  theorem-counter.update(0)
-  definition-counter.update(0)
-  it
-}
-
-#set document(
-  title:"实分析笔记",
-  author:"himkkk",
-  date:datetime.today()
-)
-#set page(
-  header: [
-    #set text(size:10pt)
-    #align(right)[#context document.title]
-  ],
-  numbering: "1"
-)
-#show title:set text(size:30pt)
-#show title:set align(center)
-#title(context document.title)
-
-#align(right)[
-  #pad(right:5em)[
-    *#context document.author.join(",")*\
-    *#context document.date.display()*
-  ]
-]
 
 = 黎曼积分的局限性
 + 黎曼积分无法处理*_不可列间断点_*的情况

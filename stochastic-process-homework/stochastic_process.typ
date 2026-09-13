@@ -1,8 +1,7 @@
-#set page(
-  header: align(right)[随机过程习题精选],
-  number-align: right,
-  numbering: "1",
-)
+#import "../template.typ": *
+
+#show: notes.with(title: "随机过程习题精选")
+
 #let EX(x) = $EE\[#x\]$
 
 _*1.*_ 令$(X_n)$是$d$维的随机游动,其中序列${xi_n}$满足$P(|xi_n|>=1)>0$.证明:
