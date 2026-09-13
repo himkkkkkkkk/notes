@@ -1,52 +1,6 @@
-#import "@preview/ilm:0.1.2": ilm
-#import "@preview/fletcher:0.5.8": diagram, node, edge
+#import "../template.typ": *
 
-#set text(font: ("New Computer Modern", "IBM Plex Sans SC"))
-
-#let tensor = $times.o$
-
-// 定理环境编号：每章(= 一级标题)清零
-#let thmctr = counter("thm")
-#show heading.where(level: 1): it => {
-  thmctr.update(0)
-  it
-}
-
-// 定理环境：语法沿用之前的模板（#名[正文] 或 #名[标题][正文]）
-#let make-env(abbr, label, color) = (..args) => {
-  context {
-    let (title, body) = if args.pos().len() >= 2 {
-      (args.pos().at(0), args.pos().at(1))
-    } else {
-      (none, args.pos().at(0))
-    }
-    let thmnum = thmctr.get().first() + 1
-    thmctr.update(thmnum)
-    let sec = counter(heading).at(here()).at(0, default: 0)
-    block(
-      width: 100%,
-      fill: luma(250),
-      stroke: (left: 2.5pt + color),
-      inset: (x: 1.2em, y: 0.7em),
-      radius: 3pt,
-    )[
-      #text(weight: "bold", size: 0.95em, fill: color)[#label #sec.#thmnum]#h(1em)
-      #if title != none { strong[#title] }
-      #v(0.35em)
-      #body
-    ]
-  }
-}
-#let definition = make-env("DEF", "定义", rgb("#b45309"))
-#let theorem = make-env("THM", "定理", rgb("#1e3a8a"))
-#let remark = make-env("REM", "备注", rgb("#475569"))
-#let example = make-env("EX", "例", rgb("#0e7a3d"))
-
-#show: ilm.with(
-  title: "信息几何笔记",
-  author: "himkkk",
-  date: datetime.today(),
-)
+#show: notes.with(title: "信息几何笔记")
 
 = 一些需要的几何基础
 
