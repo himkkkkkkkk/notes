@@ -2,6 +2,61 @@
 
 #show: notes.with(title: "信息几何笔记")
 
+= 有限维分布
+== 有限维测度空间和流形
+我们从最基本的有限维分布开始构建信息几何的框架，考虑非空有限的指标集$I$,实标量场$I->RR$记为$cal(F)(I)$,则该标量场有典范基$ e_(i)( j )=cases(
+   0\,i eq.not j,
+   1\,i=j
+) $
+对与所有的$f in cal(F)(I) , f = f^(i)e_(i)$,这里及以后如无特殊说明，都使用爱因斯坦求和约定。
+对于该标量场的对偶空间我们记为$cal(S)(I) = cal(F)^(*)(I)$,其中的基记为$delta^(i)$.
+
+以下定义一些常见的空间$ cal(M)_(+)(I) = {mu in cal(S)(I):mu_(i)>0 ,forall i in I}\ cal(P)_(+)(I) = {mu in cal(M)_(+)(I): sum_(i in I) mu_(i) = 1 } $
+
+不难看出$cal(P)_(+)(I)$为正有限维概率测度空间。
+
+== fisher度量
+给出一个测度$mu in cal(M)_(+)$,我们能够给出一个内积$ ip(f,g)_(mu) = integral_(I) f g dif mu = mu^(i) (f g)_(i) $ 
+有了内积，我们就能够定义从标量场到其对偶空间的映射了$ cal(F)(I)->cal(S)(I),f|->f mu = ip(f,dot)_(mu) $ 
+我们定义该映射的逆映射如下 $ hat(phi)_(mu):cal(S)(I)->cal(F)(I),a = a_(i) delta^(i) |-> (dif a)/(dif mu) = sum_(i) a_(i)/mu_(i) e_(i) $ 
+因此对于$cal(S)$ 上的内积可以定义如下$ ip(a,b)_(mu) = ip((dif a)/(dif mu),(dif b)/(dif mu)) = sum_(i) (1)/mu_(i) a_(i)b_(i) $ 
+
+对于两个切向量$A(=(mu,a)),B in T_(mu)cal(M)_(+)(I)$ ，我们定义fisher度量为$ bb(g)_(mu) (A,B) = ip(a,b)_(mu) $ 
+
+#example[
+  考虑度量矩阵分量$g_(i j) = ip((partial)/(partial mu_(i)),(partial)/(partial mu_(j))) = mu_(k) delta^(k)_(i) delta^(k)_(j) + (1)/mu_(n+1)$
+  其逆矩阵为
+  $ G^(-1) = mat(
+    mu_(1)(1-mu_(1)), -mu_(1)mu_(2), dots.h, -mu_(1)mu_(n);
+    -mu_(2)mu_(1), mu_(2)(1-mu_(2)), dots.h, -mu_(2)mu_(1);
+    dots.v, dots.v, dots.h, dots.v;
+    -mu_(n)mu_(1), -mu_(n)mu_(2), dots.h, mu_(n)(1-mu_(n))
+  ) $
+  如果一个随机分布的一阶矩和二阶矩都为$mu_(i)$,则可以看到fisher度量矩阵的逆是该过程的协方差矩阵。
+]
+考虑如下的拉回,
+#align(center)[
+#diagram(
+  node((0,0),$M$,name:<M>),
+  node((2,0),$cal(P)_(+)$,name:<Mp>),
+  node((0,2),$T_(mu)M$,name:<TM>),
+  node((2,2),$T_(p(mu))M$,name:<TpM>),
+  node((2,4),$RR$,name:<R>),
+  edge(<M>,<Mp>,$p$,"->"),
+  edge(<TM>,<TpM>,$dif p$,"->"),
+  edge(<TpM>,<R>,$g$,"->"),
+  edge(<TM>,<R>,$p^(*)g$,"->"),
+  edge(<M>,<TM>,$$,"->"),
+  edge(<Mp>,<TpM>,$$,"->")
+)
+]
+我们可以定义普通流形上的fisher度量的拉回
+$ g_(xi)(A,B) &= p^(*)g_(xi)(A,B)\ &= g_(xi)(dif p A, dif p B) \ &= g_(xi)((partial p)/(partial A),(partial p)/(partial B)) \ &= sum_(i) p_(i) (partial log p_(i))/(partial A) (partial log p_(i))/(partial B) $ 
+这是更为熟悉的fisher信息度量的形式。
+== 概率流形上的梯度
+
+
+#appendix[
 = 一些需要的几何基础
 
 == 切向量、余切向量以及切空间和余切空间
@@ -149,3 +204,4 @@ $ Delta_(e_(k))e_(j) eq.def Delta_(k)e_(j) = Gamma_(j k)^(i)e_(i) $
 在给定坐标的情况下，我们能类似的得到方程$ (dif^(2) gamma^(i))/(dif t^(2)) = -Gamma_(j k)^(i) (dif gamma^(j))/(dif t) (dif gamma^(k))/(dif t) $
 
 
+]

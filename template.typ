@@ -12,8 +12,14 @@
 
 #let tensor = $times.o$
 
+// 内积：$ ip(v, w) $ / $ ip(v, w)_(cal(H)) $ / $ ip(v, w)^2 $
+#let ip(a, b) = $lr(chevron.l #a, #b chevron.r)$
+
 // 定理环境编号：每章(= 一级标题)清零
 #let thmctr = counter("thm")
+
+// 是否处于附录（由 #appendix 置位），定理环境据此显示「定义 A.1」。
+#let appx = state("appx", false)
 
 // 定理环境：语法沿用之前的模板（#名[正文] 或 #名[标题][正文]）
 #let make-env(abbr, label, color) = (..args) => {
@@ -27,7 +33,11 @@
       (none, args.pos().at(0))
     }
     let thmnum = thmctr.get().first()
-    let sec = counter(heading).at(here()).at(0, default: 0)
+    // 正文用数字（1 -> "1"），附录用字母（1 -> "A"）。
+    let sec = context {
+      let n = counter(heading).at(here()).at(0, default: 0)
+      if appx.get() { numbering("A", n) } else { str(n) }
+    }
     block(
       width: 100%,
       fill: luma(250),
@@ -46,6 +56,18 @@
 #let theorem = make-env("THM", "定理", rgb("#1e3a8a"))
 #let remark = make-env("REM", "备注", rgb("#475569"))
 #let example = make-env("EX", "例", rgb("#0e7a3d"))
+
+// 附录：放在正文最后。内部标题自动编号 A、A.1…，且与正文分开计数。
+//   #appendix[
+//     = 附录
+//     == 一些细节
+//   ]
+#let appendix(body) = {
+  appx.update(true)
+  set heading(numbering: (..n) => numbering("A.1", ..n.pos()))
+  counter(heading).update(0)
+  body
+}
 
 // 文档整体设置 + ilm 封面。作为 show 规则使用：
 //   #show: notes.with(title: "标题")
