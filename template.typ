@@ -56,6 +56,10 @@
 #let theorem = make-env("THM", "定理", rgb("#1e3a8a"))
 #let remark = make-env("REM", "备注", rgb("#475569"))
 #let example = make-env("EX", "例", rgb("#0e7a3d"))
+#let proof = make-env("PF","证明",rgb("#0e0000"))
+#let proposition = make-env("PP","性质",rgb("#477777"))
+
+
 
 // 附录：放在正文最后。内部标题自动编号 A、A.1…，且与正文分开计数。
 //   #appendix[

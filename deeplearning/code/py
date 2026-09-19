@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# NixOS: uv 下载的 manylinux 轮子找不到 libstdc++/libz，
+# 且驱动库 libcuda.so.1 不在默认搜索路径里，两处都补上。
+#   1) nix-ld 聚合的通用库 (libstdc++, libz, ...)
+#   2) /run/opengl-driver/lib —— NVIDIA 驱动库 (libcuda.so.1)，PyTorch 启用 CUDA 必需
+# 用法: code/py script.py   或   code/py -c "..."
+export LD_LIBRARY_PATH="/run/current-system/sw/share/nix-ld/lib:/run/opengl-driver/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+exec "$(dirname "$0")/.venv/bin/python" "$@"

@@ -54,6 +54,14 @@
 $ g_(xi)(A,B) &= p^(*)g_(xi)(A,B)\ &= g_(xi)(dif p A, dif p B) \ &= g_(xi)((partial p)/(partial A),(partial p)/(partial B)) \ &= sum_(i) p_(i) (partial log p_(i))/(partial A) (partial log p_(i))/(partial B) $ 
 这是更为熟悉的fisher信息度量的形式。
 == 概率流形上的梯度
+考虑一个标量场$V:cal(M)_(+)->RR$,考虑他的微分，即
+$ dif_(mu) V in T_(mu)^(*)cal(M)_(+): T_(mu)M -> RR , a|->dif_(mu) V(a) = (partial V)/(partial a) |_(mu)  $ 
+我们使用$hat(phi)_(mu)^(-1)$ 可以将该余切向量拉回到切向量场上，我们称之为$V$的梯度
+#definition[
+  一个标量场的梯度是一个切向量，由下定义
+  $ "grad"_(mu) V =hat(phi)^(-1)(dif_(mu)V) = sum_(i) mu_(i) partial_(i) V delta^(i) $ 
+]
+== m-和e-联络
 
 
 #appendix[
