@@ -4,7 +4,7 @@
 //   #import "../template.typ": *
 //   #show: notes.with(title: "标题")
 //
-// 之后即可直接使用 definition / theorem / remark / example / tensor，
+// 之后即可直接使用 definition / theorem / proposition / remark / example / proof / tensor，
 // 以及 fletcher 的 diagram / node / edge。
 
 #import "@preview/ilm:0.1.2": ilm
@@ -56,7 +56,15 @@
 #let theorem = make-env("THM", "定理", rgb("#1e3a8a"))
 #let remark = make-env("REM", "备注", rgb("#475569"))
 #let example = make-env("EX", "例", rgb("#0e7a3d"))
-#let proof = make-env("PF","证明",rgb("#0e0000"))
+// 证明：粗体「证：」开头，右对齐方块结尾。
+#let proof(body) = block(
+  width: 100%,
+  inset: (x: 1.2em, y: 0.7em),
+)[
+  #text(weight: "bold")[证：]#h(0.4em)
+  #body
+  #h(1fr) $square$
+]
 #let proposition = make-env("PP","性质",rgb("#477777"))
 
 

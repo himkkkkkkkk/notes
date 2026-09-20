@@ -5,14 +5,6 @@
 // 本文额外的环境：只在本文定义，不并入全局 template.typ
 #let lemma = make-env("LEM", "引理", rgb("#0e7a3d"))
 #let proposition = make-env("PROP", "命题", rgb("#1e3a8a"))
-#let proof(body) = block(
-  width: 100%,
-  inset: (x: 1.2em, y: 0.7em),
-)[
-  #text(weight: "bold", style: "italic")[证明.]#h(0.8em)
-  #body
-  #h(1fr) $ballot$
-]
 
 #set text(size: 12pt)
 #show math.union: math.union.big
