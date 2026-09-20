@@ -16,10 +16,8 @@ $ P{attach(sup, b: n>=0)|X_n|=infinity}=1 $
 下面使用反证法:假设$P{attach(sup, b: n>=0)|X_n|=infinity}!=1$,即$exists M>0,X_n in B(X_0,M) ,forall n in ZZ^+$.
 
 则根据_levy连续性定理_,我们有$X_n$的特征函数$phi_n$收敛到在0处连续的特征函数,即
-#set math.equation(numbering: "(1)")
-$ phi_n->phi "and" lim_(x->0)phi(x) = phi(0) = 1 $ <f1>
-然而,如果设$xi_i$的特征函数为$0<=Phi<=1$,则$phi_n=Phi^n$,结合 @f1 得,
-#set math.equation(numbering: none)
+$ phi_n->phi "and" lim_(x->0)phi(x) = phi(0) = 1 $
+然而,如果设$xi_i$的特征函数为$0<=Phi<=1$,则$phi_n=Phi^n$,结合上式得,
 $ exists delta>0,Phi=1 ,forall x in U(0,delta) $
 这说明在某个领域内,$xi_i$为常数,即$xi_i=c$,
 

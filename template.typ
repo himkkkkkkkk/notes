@@ -94,5 +94,7 @@
     author: author,
     date: datetime.today(),
   )
+  // 取消 ilm 默认的公式编号（(1)、(2)…）
+  set math.equation(numbering: none)
   body
 }
