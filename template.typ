@@ -96,5 +96,9 @@
   )
   // 取消 ilm 默认的公式编号（(1)、(2)…）
   set math.equation(numbering: none)
+  // 列表项里插入根式/分式/求和等较高的行内公式时，默认间距(1em)
+  // 会让相邻项上下重叠，这里加大列表项间距。
+  set list(spacing: 1.5em)
+  set enum(spacing: 1.5em)
   body
 }
