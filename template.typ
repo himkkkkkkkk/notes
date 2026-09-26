@@ -12,8 +12,15 @@
 
 #let tensor = $times.o$
 
-// 内积：$ ip(v, w) $ / $ ip(v, w)_(cal(H)) $ / $ ip(v, w)^2 $
-#let ip(a, b) = $lr(chevron.l #a, #b chevron.r)$
+// 内积：$ ip(v, w) $ / $ ip(v) $ / $ ip(v, w)_(cal(H)) $ / $ ip(v, w)^2 $
+#let ip(..args) = $lr(chevron.l #args.pos().join(", ") chevron.r)$
+
+// 对角矩阵：$ diag(a, b, c) $，非对角元留空，也支持 $ diag(lambda_1, dots, lambda_n) $
+#let diag(..entries) = {
+  let v = entries.pos()
+  let n = v.len()
+  math.mat(..range(n).map(i => range(n).map(j => if i == j { v.at(i) } else { [] })))
+}
 
 // 定理环境编号：每章(= 一级标题)清零
 #let thmctr = counter("thm")
