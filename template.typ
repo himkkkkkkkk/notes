@@ -22,6 +22,9 @@
   math.mat(..range(n).map(i => range(n).map(j => if i == j { v.at(i) } else { [] })))
 }
 
+// 行列式：$ det(a, b; c, d) $，也支持 $ det(A) $（即 |A|）
+#let det = math.mat.with(delim: "|")
+
 // 定理环境编号：每章(= 一级标题)清零
 #let thmctr = counter("thm")
 
