@@ -37,4 +37,14 @@
   哈皮言，杀机焉用牛刀，他认为使用jordan分解在这里过于高级。
 ]
 
-== 第二次课：
+== 第二次课
+#example[
+  假定$A$ 为实对称矩阵，那么$ max_(x^(T)x != 0) (x^(T)A x)/(x^(T)x) = lambda_(max)(A) quad min_(x^(T)x != 0) (x^(T)A x)/(x^(T)x) = lambda_(min)(A $ 
+]
+#proof[
+  对于实对称矩阵，我们可以将$x$分解为特征向量的线性和,即 $x = omega^(T)v$
+  那么$ (x^(T)A x)/(x^(T)x) &= (sum_(i=1)^(n) lambda_(i) omega_(i)^(2) v_(i)^(2) )/(sum_(i=1)^(n) omega_(i)^(2) v_(i)^(2)) \ &<=lambda_(max) cal(1) \ &= lambda_(max) \ $ 
+  最小值同理
+]
+
+
