@@ -114,6 +114,7 @@ $ PP (abs((hat(overline(Y))-overline(Y))/overline(Y)) <=d) >= 1-alpha <=> PP (ab
 化归为要求3
 
 == 利用辅助信息：比估计和回归估计
+=== 比估计
 首先将上面的记号推广到多维情景
 $ S_(bold(Z))^(2) = (1)/(N-1) sum_(i=1)^(n) (bold(Z)_(i)-overline(bold(Z)))(bold(Z)_(i)-overline(bold(Z)))^(tack.b) $
 $ EE overline(bold(z)) = overline(bold(Z)) $
@@ -145,4 +146,80 @@ $ g(overline(bold(z))) ~ N(g(overline(bold(Z))),((partial g)/(partial z) |_(z = 
 ]
 #proof[
   先略
+]
+
+因此，在已知$overline(X)$ 的信息情况下，我们可以利用比估计来估计$overline(Y)_(R) = hat(R) overline(X)$.
+我们有如下性质
+#proposition[
+  + $EE(hat(overline(Y)_(R))) = overline(Y)$ 
+  + $Var(hat(overline(Y)_(R))) = (1-f)/(n) (S_(y y)^(2) -2 R S_(x y) + R^(2) S_(x x)^(2))$
+  + $hat(Var)hat(overline(Y)_(R)) = (1-f)/(n) (s_(y y)^(2) -2 hat(R) s_(x y) + hat(R)^(2) s_(x x)^(2))$
+]
+如何判断与简单估计的更优性？考虑方差的差
+$ Var(hat(overline(Y))) - Var(hat(overline(Y)_(R))) = (1-f)/(n) S_(y y)^(2) - (1-f)/(n) (S_(y y)^(2) -2 R S_(x y) + R^(2) S_(x x)^(2)) \ = (1-f)/(n) (2R S_(x y) - R^(2)S_(x x)^(2)) $
+#proposition[
+  当$2R S_(x y) - R^(2)S_(x x)^(2)>=0$时，比估计更优（方差更小），在实际应用中，通常比$R$ 为正，因此当
+  $ rho > (R S_(x x))/(2 S_(y y)) $ 
+  比估计更好，其中$rho S_(x x)S_(y y) = S_(x y)$
+]
+
+=== 回归估计
+回归估计不要求像比估计一样两个变量之间的正比例关系，回归估计可以考虑更一般的线性关系，并且可以利用更多的额外信息。
+在简单不放回随机抽样下，总体均值的回归估计为
+$ hat(overline(Y)_(l r)) = overline(y) + beta(overline(X)-overline(x)) $ 
+
+#theorem[
+  在$beta$ 已知的情况下，我们有
+  + $EE(hat(overline(Y)_(l r))) = overline(Y)$ 
+  + $Var(hat(overline(Y)_(l r))) = (1-f)/(n) (S_(y y)^(2) - 2 beta S_(x y) + beta^(2)S_(x x)^(2))$
+]
+#proof[
+  $ EE(hat(overline(Y)_(l r))) &= EE(overline(y) + beta(overline(X)-overline(x))) \ &= EE(overline(y)) + beta EE(overline(X)-overline(x)) \ &= overline(Y) + beta times 0 \ &= overline(Y) \ $ 
+  $ Var(hat(overline(Y)_(l r))) &= Var(overline(y) + beta(overline(X)-overline(x))) \ &= Var(overline(y) - beta overline(x)) \ &= Var((1)/n sum_(i=1)^(n) (y_(i)-beta x_(i))) \ &= (1-f)/(n) Var(y_(i)-beta x_(i)) \ &= (1-f)/(n) (S_(y y)^(2) -2 beta S_(x y)+beta^(2)S_(x x)^(2)) \ $ 
+  在这里我们用到了简单估计的方差公式。
+]
+
+如果$beta$ 未知（这也是大部分实际情况），我们需要$MSE$最小的估计 $hat(beta)$ ，又我们需要的统计量是近似无偏的，因此我们要$hat(beta)$ 最小化我的方差,即$hat(beta) = (S_(x y))/(S_(x x)^(2))$
+ 此时我们有
+ #theorem[
+   + $EE(hat(overline(Y)_(l r))) = overline(Y)$ 
+   + $Var(hat(overline(Y)_(l r))) = (1-f)/(n)(S_(y y)^(2) - 2 hat(beta) S_(x y) + hat(beta)^(2)S_(x x)^(2)) = (1-f)/(n) S_(y y)^(2) (1-rho^(2))$
+   + $hat(Var)(hat(overline(Y)_(l r))) = (1-f)/(n) (n-1)/(n-2) s_(y y)^(2)(1-hat(rho)^(2))$ 
+   在这里因为残差的期望为0，并且残差与数据独立，因此自由度为$n-2$ 故需要$(1)/(n-2)$ 的修正。
+ ]
+可以看出，回归估计总是比简单估计更优。
+
+同样的，通过做差，也可以得到回归估计比比估计更优。
+
+== 子总体特征的估计
+#definition[
+  总体按照属性进行划分称为子总体。
+]
+假定总体有$N$ 个单元，指标为$Y_(i)$ 若单元$i in D$则， $X_(i) = 1$，否则为0.
+#definition[
+  子总体的规模定义为$N_(D) = sum_(i=1)^(n) X_(i)$ 
+
+  子总体的总和为$Y_(D) = sum_(i=1)^(N) y_(i)X_(i)$
+
+  子总体的均值为$overline(Y)_(D) = (Y_(D))/(N_(D))$
+]
+
+子总体总和$Y_(D)$的估计
+#theorem[
+  定义$Z_(i) = Y_(i)X_(i)$ 则
+  + $hat(Y)_(D) = N overline(z) = (N)/(n) sum_(i=1)^(n) z_(i)$ 
+  + $hat(Var)(hat(Y)_(D)) = N^(2) (1-f)/(n) s_(z)^(2)$
+]
+子总体均值的估计，由于规模通常未知，我们做如下变换
+$hat(overline(Y)_(D)) = (sum_(i=1)^(n) z_(i))/(n_(D)) = (overline(z))/(overline(x))$ 
+因此可以使用比估计的方法去解决。
+
+= 分层抽样
+当总体内部存在明显的分层结构时，简单随机抽样会导致某些子总体代表性不足，影响估计的精度。
+== 均值和方差
+总体均值的估计量$overline(Y) = overline(y)_(s t)$ 有这些性质：
+#theorem[
+  + 无偏性：$EE(overline(y)_(s t)) = sum_(h=1)^(L) W_(h)EE(overline(y)_(h)) = sum_(h=1)^(L) W_(h)overline(Y)_(h) = overline(Y)$ 
+  + 方差: $Var(overline(y)_(s t)) = sum_(h=1)^(L) W_(h)Var(overline(y)_(h)) = sum_(h=1)^(L) W_(h)^(2) (1-f_(h))/(n_(h)) S_(h)^(2)$
+  + 无偏估计： $hat(Var)(hat(y)_(s t)) = sum_(h=1)^(L) W_(h)Var(overline(y)_(h)) = sum_(h=1)^(L) W_(h)^(2) (1-f_(h))/(n_(h)) s_(h)^(2)$
 ]
